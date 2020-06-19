@@ -7,7 +7,7 @@ from os import environ
 
 # Google Cloud Storage
 bucketName = 'edge-detect-project.appspot.com'
-bucketFolder = 'uploads'
+bucketFolder = 'uploads/'
 
 #set credentials
 credential_path = "credentials.json"
@@ -35,19 +35,14 @@ def index():
 def upload():
     file = request.files['file']
     if file and allowed_file(file.filename):
+        #upload file to a blob
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # Redirect the user to the uploaded_file route, which
-        # will basicaly show on the browser the uploaded file
-        print (filename)
-        testcv.image_make(filename)
-        return redirect(url_for('uploaded_file',
-                                filename=filename))
+        blob = bucket.blob(bucketFolder + filename)
+        blob.upload_from_file(file)
+        src=blob.public_url
 
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
+        #render image in painter.html
+        return render_template("painter.html", image_source=src)
 
 if __name__ == '__main__':
     app.run(

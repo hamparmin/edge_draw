@@ -5,7 +5,7 @@ from random import randint
 from google.cloud import storage
 
 
-def upload_files(bucketName):
+def upload_files(bucketName,file):
     """Upload files to GCP bucket."""
     files = [f for f in listdir(localFolder) if isfile(join(localFolder, f))]
     for file in files:
