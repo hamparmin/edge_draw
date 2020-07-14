@@ -4,10 +4,9 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 from werkzeug.utils import secure_filename
 from os import environ
 import requests
-from testapi import rm_bg
 
 # Google Cloud Storage
-bucketName = 'edge-detect-project.appspot.com'
+bucketName = 'mvp-ailab.appspot.com'
 bucketFolder = 'uploads/'
 
 #set credentials
