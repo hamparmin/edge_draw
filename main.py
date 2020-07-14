@@ -2,8 +2,9 @@ from storage import *
 import os
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
-import testcv
 from os import environ
+import requests
+from testapi import rm_bg
 
 # Google Cloud Storage
 bucketName = 'edge-detect-project.appspot.com'
@@ -40,9 +41,12 @@ def upload():
         blob = bucket.blob(bucketFolder + filename)
         blob.upload_from_file(file)
         src=blob.public_url
+        
+  
+    #render image in painter.html
+    return render_template("painter.html", image_source=src)
 
-        #render image in painter.html
-        return render_template("painter.html", image_source=src)
+
 
 if __name__ == '__main__':
     app.run(
