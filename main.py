@@ -6,7 +6,7 @@ from os import environ
 import requests
 
 # Google Cloud Storage
-bucketName = 'mvp-ailab.appspot.com'
+bucketName = 'mvp_images'
 bucketFolder = 'uploads/'
 
 #set credentials
